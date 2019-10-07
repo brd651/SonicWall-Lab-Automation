@@ -1,0 +1,177 @@
+#Fresh Config
+#CGSS config
+
+content-filter
+uri-list-object "O - Global Allowed Domains"
+uri calendly.com
+uri westernnrg.com
+exit
+commit best
+ 
+uri-list-group "G - LAN Allowed Domains"
+uri-list-object "O - Global Allowed Domains"
+exit
+commit best
+ 
+uri-list-object "O - Global Forbidden Domains"
+uri badsite
+exit
+commit best
+ 
+uri-list-group "G - LAN Forbidden Domains"
+uri-list-object "O - Global Forbidden Domains"
+exit
+commit best
+ 
+profile CFS\ Default\ Profile
+uri-list allowed "G - Allowed Domains"
+uri-list forbidden "G - Forbidden Domains"
+category 28.\ Hacking/Proxy\ Avoidance\ Systems block
+category 59.\ Malware block
+category 60.\ Radicalization\ and\ Extremism block
+exit
+exit
+commit best
+ 
+gateway-antivirus
+enable
+inbound-inspection http
+inbound-inspection ftp
+inbound-inspection imap
+inbound-inspection smtp
+inbound-inspection pop3
+inbound-inspection cifs-netbios
+inbound-inspection tcp-stream
+outbound-inspection http
+outbound-inspection ftp
+outbound-inspection smtp
+outbound-inspection tcp-stream
+restrict password-protected-zip http
+restrict password-protected-zip ftp
+restrict password-protected-zip imap
+restrict password-protected-zip smtp
+restrict password-protected-zip pop3
+restrict password-protected-zip cifs-netbios
+restrict packed-executables imap
+restrict packed-executables smtp
+restrict packed-executables pop3
+restrict packed-executables cifs-netbios
+restrict ms-office-macros http
+restrict ms-office-macros ftp
+restrict ms-office-macros imap
+restrict ms-office-macros smtp
+restrict ms-office-macros pop3
+no restrict ms-office-macros cifs-netbios
+exit
+commit best
+ 
+intrusion-prevention
+enable
+signature-group high-priority prevent-all
+signature-group high-priority detect-all
+no signature-group high-priority log-redundancy
+signature-group medium-priority prevent-all
+signature-group medium-priority detect-all
+no signature-group medium-priority log-redundancy
+no signature-group low-priority prevent-all
+no signature-group low-priority detect-all
+signature-group low-priority log-redundancy 60
+no exclusion list
+exit
+commit best
+ 
+anti-spyware
+enable
+signature-group high-danger prevent-all
+signature-group high-danger detect-all
+no signature-group high-danger log-redundancy
+signature-group medium-danger prevent-all
+signature-group medium-danger detect-all
+no signature-group medium-danger log-redundancy
+signature-group low-danger prevent-all
+signature-group low-danger detect-all
+no signature-group low-danger log-redundancy
+inspection inbound http
+inspection inbound ftp
+inspection inbound imap
+inspection inbound smtp
+inspection inbound pop3
+inspection outbound
+exit
+commit best
+ 
+botnet
+block connections all
+logging
+exit
+commit best
+ 
+geo-ip
+exclude group "Default Geo-IP and Botnet Exclusion Group"
+exit
+commit best
+ 
+appflow
+real-time data-collection
+flows-to local-collector
+report dropped
+include-url-types gifs
+include-url-types jpegs
+include-url-types pngs
+include-url-types js
+include-url-types xmls
+include-url-types jsons
+include-url-types css
+include-url-types htmls
+include-url-types aspx
+include-url-types cms
+geo-ip-resolution
+exit
+commit best
+ 
+app-control
+enable
+commit best
+ 
+category name "P2P"
+block
+log
+exit
+commit best
+ 
+category name "MINERS"
+block
+log
+exit
+commit best
+ 
+category name "Proxy-Access"
+block
+log
+exit
+commit best
+ 
+category name PROXY-ACCESS app name Ultrasurf
+no block
+no log
+exit
+commit best
+ 
+category name PROXY-ACCESS app name "Encrypted Key Exchange"
+no block
+no log
+exit
+commit best
+ 
+category name PROXY-ACCESS app name "Non-SSL traffic over SSL port"
+no block
+no log
+exit
+commit best
+ 
+category name PROXY-ACCESS app name "HTTP Proxy" signature id 7300
+no block
+no log
+exit
+exit
+commit best
